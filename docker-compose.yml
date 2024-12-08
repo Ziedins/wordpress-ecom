@@ -1,0 +1,28 @@
+services:
+  wordpress:
+    container_name: ecom-wordpress
+    image: wordpress:php8.3
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+    environment:
+      WORDPRESS_DB_NAME: 'wordpress'
+      WORDPRESS_TABLE_PREFIX: 'wp_'
+      WORDPRESS_DB_HOST: 'db'
+      WORDPRESS_DB_USER: 'ecom'
+      WORDPRESS_DB_PASSWORD: 'qwerty'
+    ports:
+      - '8090:80'
+  db:
+    image: mariadb:latest
+    container_name: ecom-db
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: 'wordpress'
+      MYSQL_USER: 'ecom'
+      MYSQL_PASSWORD: 'qwerty'
+      MYSQL_ROOT_PASSWORD: 'qwerty'
+    ports:
+      - '3316:3306'
+volumes:
+  db_data:
